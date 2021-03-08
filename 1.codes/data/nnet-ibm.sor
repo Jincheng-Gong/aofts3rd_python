@@ -1,0 +1,26 @@
+# A line begins with the character # means comment
+# The data file used is m-ibmln2699.txt
+# I used past three lagged values as input nodes.
+#
+# load the data into R workspace
+x=scan(file='m-ibmln2699.txt')
+# select the output: r(t)
+y=x[4:864]
+# obtain the input variables: r(t-1), r(t-2), and r(t-3)
+ibm.x=cbind(x[3:863],x[2:862],x[1:861])
+# build a 3-2-1 network with skip layer connections and linear output.
+ibm.nn=nnet(ibm.x,y,size=2,linout=T,skip=T,maxit=500) 
+# print the summary results of the network
+summary(ibm.nn)
+# compute, then print, the residual sum of squares.
+sse=sum((y-predict(ibm.nn,ibm.x))^2)
+print(sse)
+# setup the input variables in the forecsting subsample
+ibm.p=cbind(x[864:887],x[863:886],x[862:885])
+# compute the forecasts
+yh=predict(ibm.nn,ibm.p)
+# select the observed returns in the forecasting subsample
+yo=x[865:888]
+# compute, then print, the sum of squares of forecast errors
+ssfe=sum((yo-yh)^2)
+print(ssfe)

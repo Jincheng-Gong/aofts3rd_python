@@ -1,0 +1,9 @@
+Data descriptions via columns for file day15.dat:
+day, 
+time in seconds from midnight, 
+intraday duration between price change, 
+direction of price change, 
+size of price change in multiples of $1/8,
+number of trades without price changes in the duration, 
+indicator for multiple tractions within a second, 
+daily cumulative price change.
